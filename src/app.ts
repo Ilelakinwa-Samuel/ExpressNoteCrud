@@ -3,10 +3,19 @@ import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import sequelize from "./config/db.config";
 
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 
+sequelize
+  .sync()
+  .then(() => {
+    console.log("database synced");
+  })
+  .catch((err) => {
+    console.log("err sync db", err);
+  });
 const app = express();
 
 // view engine setup
