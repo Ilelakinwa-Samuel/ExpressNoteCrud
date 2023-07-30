@@ -11,8 +11,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const db_config_1 = __importDefault(require("./config/db.config"));
 const index_1 = __importDefault(require("./routes/index"));
 const users_1 = __importDefault(require("./routes/users"));
-db_config_1.default
-    .sync()
+db_config_1.default.sync()
     .then(() => {
     console.log("database synced");
 })

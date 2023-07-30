@@ -7,6 +7,12 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-    res.send("respond with a resource");
+    res.send("from get request");
+});
+router.put("/", function (req, res, next) {
+    res.send("from get put");
+});
+router.delete("/", function (req, res, next) {
+    res.send("from get delete");
 });
 exports.default = router;
