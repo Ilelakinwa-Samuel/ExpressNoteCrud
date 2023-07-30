@@ -1,3 +1,4 @@
+import { config } from "dotenv";
 import createError from "http-errors";
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
@@ -15,6 +16,14 @@ db.sync()
   .catch((err) => {
     console.log("err sync db", err);
   });
+
+config();
+console.log(process.env.PORT);
+
+const myLogger = function (req: Request, res: Response, next: NextFunction) {
+  console.log("LOGGED");
+  next();
+};
 const app = express();
 
 // view engine setup
