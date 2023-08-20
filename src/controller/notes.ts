@@ -4,12 +4,27 @@ import { Notes, NoteAttributes } from "../model/notes";
 import { promises } from "dns";
 import { options, updatenoteschema, create_NoteSchema } from "../utils/utils";
 import { any } from "joi";
+import { config } from "dotenv";
+import jwt from "jsonwebtoken";
 
+config();
+
+const jwtsecret = process.env.JWT_SECRET!;
+
+interface Decrypt {
+  id?: string;
+  iat?: number;
+  exp?: number;
+}
 //CREATE NOTES
 
 export const create_Note = async (req: Request | any, res: Response) => {
   try {
-    const verified = req.user;
+    const token = req.headers.authorization.split(" ")[1] || req.cookie.token;
+    console.log(token);
+
+    const verified = jwt.verify(token, jwtsecret) as Decrypt;
+
     console.log(verified);
 
     const id = UUIDV4();

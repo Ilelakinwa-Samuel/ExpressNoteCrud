@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Logout = exports.delete_User = exports.update_User = exports.get_User = exports.get_users = exports.Login = exports.signup = void 0;
 const user_1 = require("../model/user");
 const uuid_1 = require("uuid");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 const utils_1 = require("../utils/utils");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -80,6 +82,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //validate with joi or zoid
         const validatedResult = utils_1.loginUserSchema.validate(req.body, utils_1.options);
         if (validatedResult.error) {
+            console.error(validatedResult.error.message);
             return res
                 .status(400)
                 .json({ Error: validatedResult.error.details[0].message });
@@ -91,7 +94,11 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { id } = user;
         const token = jsonwebtoken_1.default.sign({ id }, jwtsecret, { expiresIn: "30d" });
         //USE LINE WHEN ITS COOKIE INSTEAD OF AUTHORISATION HEADER IN AUTH
-        //res.cookie('token', token, {httpOnly:true, maxAge:30*24*60*60*1000})
+        req.headers = Object.assign(Object.assign({}, req.headers), { authorization: `Bearer ${token}` });
+        res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+        });
         const validUser = yield bcryptjs_1.default.compare(password, user.password);
         if (validUser) {
             return res.status(200).json({

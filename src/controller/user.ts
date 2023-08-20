@@ -1,7 +1,10 @@
-import express, { Request, Response, NextFunction, application } from "express";
-import { User } from "../model/user";
-import { v4 as uuidv4 } from "uuid";
+import express, { Request, Response, NextFunction } from "express";
+import { User, UserAttributes } from "../model/user";
+import { v4 as UUIDV4 } from "uuid";
 import { promises } from "dns";
+import { config } from "dotenv";
+
+config();
 
 import {
   options,
@@ -24,7 +27,7 @@ export const signup = async (req: Request, res: Response) => {
       phone,
       address,
     } = req.body;
-    const newId = uuidv4();
+    const newId = UUIDV4();
 
     //validate with joi or zoid
     const validatedResult = signupSchema.validate(req.body, options);
@@ -88,9 +91,11 @@ export const signup = async (req: Request, res: Response) => {
 export const Login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+
     //validate with joi or zoid
     const validatedResult = loginUserSchema.validate(req.body, options);
     if (validatedResult.error) {
+      console.error(validatedResult.error.message);
       return res
         .status(400)
         .json({ Error: validatedResult.error.details[0].message });
@@ -106,7 +111,11 @@ export const Login = async (req: Request, res: Response) => {
 
     const token = jwt.sign({ id }, jwtsecret, { expiresIn: "30d" });
     //USE LINE WHEN ITS COOKIE INSTEAD OF AUTHORISATION HEADER IN AUTH
-    //res.cookie('token', token, {httpOnly:true, maxAge:30*24*60*60*1000})
+    req.headers = { ...req.headers, authorization: `Bearer ${token}` };
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
 
     const validUser = await bcrypt.compare(password, user.password);
 

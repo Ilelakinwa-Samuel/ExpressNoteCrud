@@ -10,7 +10,7 @@ import {
 } from "../controller";
 const router = express.Router();
 
-router.post("/", signup);
+router.post("/create", signup);
 router.post("/login", Login);
 router.get("/read", get_users);
 router.put("/update/:id", update_User);

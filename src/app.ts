@@ -48,7 +48,7 @@ const myLogger = function (req: Request, res: Response, next: NextFunction) {
   console.log("LOGGED");
   next();
 };
-
+// middleware that relates to your end-point
 app.use("/api/note", notesRouter);
 app.use("/api/user", usersRouter);
 // app.use("/", homePage);

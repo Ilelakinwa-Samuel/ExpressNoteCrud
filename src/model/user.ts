@@ -7,6 +7,7 @@ export interface UserAttributes {
   fullname: string;
   email: string;
   password: string;
+
   gender: string;
   phone: string;
   address: string;

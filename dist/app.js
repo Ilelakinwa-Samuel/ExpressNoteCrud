@@ -42,6 +42,7 @@ const myLogger = function (req, res, next) {
     console.log("LOGGED");
     next();
 };
+// middleware that relates to your end-point
 app.use("/api/note", notes_1.default);
 app.use("/api/user", user_1.default);
 // app.use("/", homePage);

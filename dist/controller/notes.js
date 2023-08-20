@@ -8,15 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.delete_Note = exports.update_Note = exports.get_Note = exports.getAllNotes = exports.create_Note = void 0;
 const uuid_1 = require("uuid");
 const notes_1 = require("../model/notes");
 const utils_1 = require("../utils/utils");
+const dotenv_1 = require("dotenv");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+(0, dotenv_1.config)();
+const jwtsecret = process.env.JWT_SECRET;
 //CREATE NOTES
 const create_Note = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const verified = req.user;
+        const token = req.headers.authorization.split(" ")[1] || req.cookie.token;
+        console.log(token);
+        const verified = jsonwebtoken_1.default.verify(token, jwtsecret);
         console.log(verified);
         const id = (0, uuid_1.v4)();
         //const { title, description, duedate, status } = req.body; instead of this...

@@ -10,7 +10,7 @@ import { auth } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/", auth, create_Note);
+router.post("/create", auth, create_Note);
 router.get("/", auth, getAllNotes);
 router.put("/update/:id", update_Note);
 router.delete("/delete/:id", delete_Note);
