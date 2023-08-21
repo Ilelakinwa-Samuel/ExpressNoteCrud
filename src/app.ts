@@ -51,7 +51,7 @@ const myLogger = function (req: Request, res: Response, next: NextFunction) {
 // middleware that relates to your end-point
 app.use("/api/note", notesRouter);
 app.use("/api/user", usersRouter);
-// app.use("/", homePage);
+// app.use("/", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Logout = exports.delete_User = exports.update_User = exports.get_User = exports.get_users = exports.Login = exports.signup = void 0;
-const user_1 = require("../model/user");
-const uuid_1 = require("uuid");
-const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)();
-const utils_1 = require("../utils/utils");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const dotenv_1 = require("dotenv");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const uuid_1 = require("uuid");
+const user_1 = require("../model/user");
+const utils_1 = require("../utils/utils");
+(0, dotenv_1.config)();
 const jwtsecret = process.env.JWT_SECRET;
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -82,7 +82,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //validate with joi or zoid
         const validatedResult = utils_1.loginUserSchema.validate(req.body, utils_1.options);
         if (validatedResult.error) {
-            console.error(validatedResult.error.message);
+            // console.error(validatedResult.error.message);
             return res
                 .status(400)
                 .json({ Error: validatedResult.error.details[0].message });
@@ -107,11 +107,13 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 token,
             });
         }
+        res;
         return res.status(400).json({ Error: "Invalid Email/Password" });
     }
     catch (err) {
-        console.log(err);
-        return res.status(500).json({ Error: "Internal server error" });
+        res.status(401).json({ err: err.message });
+        // console.log(err);
+        // return res.status(500).json({ Error: "Internal server error" });
     }
 });
 exports.Login = Login;

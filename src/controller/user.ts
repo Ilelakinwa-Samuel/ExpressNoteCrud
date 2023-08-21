@@ -1,19 +1,17 @@
-import express, { Request, Response, NextFunction } from "express";
-import { User, UserAttributes } from "../model/user";
-import { v4 as UUIDV4 } from "uuid";
-import { promises } from "dns";
+import bcrypt from "bcryptjs";
 import { config } from "dotenv";
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { v4 as UUIDV4 } from "uuid";
+import { User } from "../model/user";
+import {
+  loginUserSchema,
+  options,
+  signupSchema,
+  updateUserSchema,
+} from "../utils/utils";
 
 config();
-
-import {
-  options,
-  updateUserSchema,
-  signupSchema,
-  loginUserSchema,
-} from "../utils/utils";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 const jwtsecret = process.env.JWT_SECRET as string;
 
 export const signup = async (req: Request, res: Response) => {
@@ -95,7 +93,7 @@ export const Login = async (req: Request, res: Response) => {
     //validate with joi or zoid
     const validatedResult = loginUserSchema.validate(req.body, options);
     if (validatedResult.error) {
-      console.error(validatedResult.error.message);
+      // console.error(validatedResult.error.message);
       return res
         .status(400)
         .json({ Error: validatedResult.error.details[0].message });
@@ -126,10 +124,12 @@ export const Login = async (req: Request, res: Response) => {
         token,
       });
     }
+    res;
     return res.status(400).json({ Error: "Invalid Email/Password" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ Error: "Internal server error" });
+  } catch (err: any) {
+    res.status(401).json({ err: err.message });
+    // console.log(err);
+    // return res.status(500).json({ Error: "Internal server error" });
   }
 };
 
