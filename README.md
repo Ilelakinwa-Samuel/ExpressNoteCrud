@@ -1,75 +1,32 @@
-# EXPRESS
+**Project Title: ExpressNoteApp**
 
-### Setup
+**Project Details:**
+The ExpressNoteApp project involves setting up a robust Express application and transitioning it to TypeScript for enhanced code integrity. The TypeScript configuration (tsconfig) will be established, and a .gitignore file will be crafted to exclude node_modules from version control.
 
-1. Use and setup the project with `yarn`.
-2. Convert the project to Typescript.
-3. Initialize tsconfig.
-4. Create .gitignore file to ignore the node_modules
 ## Problem Description:
 
-Create A basic Express application, that makes a CRUD operation (create, read, update, delete) using SQLite database, document and publish your endpoints using postman.
-In this project, you’ll build a basic CRUD (Create, Read, Update, Delete), For a Note Application. The application will be able to store and edit notes.
+The primary objective of this project is to create a foundational Express application capable of executing CRUD operations (Create, Read, Update, Delete) utilizing an SQLite database. The endpoints will be meticulously documented and exposed using Postman for thorough testing.
+
+In this endeavor, you will construct a fundamental CRUD system tailored to a Note Application. This application will facilitate the storage and modification of notes.
 
 ## Requirements:
 
-IMPLEMENT AUTHORIZATION AND AUTHENTICATION: PROTECT ALL ROUTES. ONLY THE LOGGED-IN USERS CAN PERFORM THE FOLLOWING OPERATIONS
+**Implement Authorization and Authentication: Secure All Routes. Only Authenticated Users Can Perform the Following Actions:**
 
-- You can add a new note .
-- You can edit notes.
-- You can delete a note.
+- Addition of new notes.
+- Editing of existing notes.
+- Deletion of notes.
 
-## NOTE
-- Users that are not authenticated can browse through notes.
+**Note:**
+Users without authentication are granted access to peruse the notes.
 
-## How will I complete this project?
+## Completion Guidelines:
 
-- Your aplication should be able to perform.
-  - `GET` Request which returns all the data in your database
-  - `POST` Request which adds data to your database
-  - `PUT` Request which updates fields of a particular data using the id in database
-  - `DELETE` Request which removes a particular data from your database using the id
-- Host your application on Heroku.
-- Data format example: This show the model for users and the notes created by the user
+To successfully complete this project, your application should demonstrate the following functionality:
 
-```
-[
+- `GET` Request: Retrieve all data from the database.
+- `POST` Request: Add data to the database.
+- `PUT` Request: Update specific data fields using the unique id in the database.
+- `DELETE` Request: Remove specific data using the corresponding id.
 
- {
-   fullname: 'john doe',
-   email: 'john@example.com', // no duplicates allowed.
-   gender:'m',
-   phone:'+2347085647535',
-   address:'1, rantech stop, ',
- }
- 
-   Notes:[
-   {
-   Title: 'Paying Mama Ngozi',
-   description: 'I am owing 10k',
-   DueDate:"25th of April 2022",
-   status:"Pending",
-   id:"databaseId1"
-   }
-   ......
-]
-```
-
-## FRONTEND
-
-- Page to display all notes and thier description
-- Page to display each notes
-- Implement an admin/dashboard area to add, edit and delete ( User can only edit and delete Notes created by them)
-- Create a Login Page and Sign Up Page
-
-## Test coverage
-
-- Make sure you write test to cover your application using Jest/supertest
-
-### Test
-
-- Test for a GET request
-- Test for a POST request
-- Test for a PUT request
-- Test for a DELETE request
-- Test to return proper HTTP status codes
+Through this project, you will develop expertise in building secure and efficient Express applications while mastering CRUD operations and user authentication.
